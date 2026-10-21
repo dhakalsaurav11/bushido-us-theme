@@ -35,7 +35,15 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 
 1. On the main site: Products → Export → CSV.
 2. On the US site: Products → Import → upload the CSV.
-3. Prices: the main site uses "price based on countries", so the exported prices may be the base (NPR) ones. Check each product and enter its USD price.
+3. Prices: the main store's currency is already USD, but several products have Nepali-rupee amounts typed in as dollars. Fix them on each **variation** (Product data → Variations), not just the parent product. As of Oct 2026 these were:
+   - Dragon Hooded Sleeveless Zip-up Vest: $2,800
+   - Ryujin Long Sleeves, Olive Green and Black: $2,500
+   - Twin Dragon double layered tees: $1,999
+   - The Flow State Tees: $1,500
+   - Embroidered Sakura Pants: $3,500
+   - Year of the Dragon Kimono: $2,500
+
+   The rest ($35 jerseys, $50 hoodies and so on) look like real USD prices. Nearly every product is a variable product with a Size option, and the theme handles that.
 4. Images: the grid is designed for transparent cut-outs. Edit each product, set the cut-out from `bushido-us-product-images.zip` as its **Product image**, and move the old photo into the Product gallery.
 
 ## Local test

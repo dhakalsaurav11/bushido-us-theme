@@ -1,0 +1,303 @@
+/*
+Theme Name: Bushido US
+Theme URI: https://us.bushidonepal.com
+Author: Saurav Dhakal
+Description: Storefront theme for Bushido's US site. Logo bar on top, navigation on the bottom, two fixed figures in the side panels and a hairline product grid between them. Built for WooCommerce.
+Version: 1.0.0
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bushido-us
+*/
+
+/* Layout: logo bar on top, navigation on the bottom, two fixed figures filling the side panels,
+   and a hairline product grid scrolling between them. White ground, black and grey type,
+   one monospace face. Single light theme on purpose. */
+:root {
+  --bh-white: #FFFFFF;
+  --bh-ink: #111111;
+  --bh-grey: #8C8C8C;
+  --bh-line: #E4E4E4;
+  --bh-soft: #F6F6F6;
+  --bh-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --bh-top-h: 72px;
+  --bh-nav-h: 56px;
+  --bh-center: min(62vw, 1040px);
+  /* Height of the WordPress admin bar when a logged-in user sees it; fixed bars sit below it. */
+  --bh-admin: 0px;
+  color-scheme: light;
+}
+body.admin-bar { --bh-admin: 32px; }
+@media (max-width: 782px) {
+  body.admin-bar { --bh-admin: 46px; }
+}
+/* WordPress lets the admin bar scroll away on phones; keep it fixed so the logo bar never ends up under it. */
+@media (max-width: 600px) {
+  #wpadminbar { position: fixed; }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bh-white); }
+body {
+  margin: 0;
+  background: var(--bh-white);
+  color: var(--bh-ink);
+  font: 400 12px/1.5 var(--bh-mono);
+  letter-spacing: .04em;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; z-index: 10;
+  height: env(safe-area-inset-top, 0px); background: var(--bh-white);
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 1px solid var(--bh-ink); outline-offset: 4px; }
+
+.screen-reader-text {
+  border: 0; clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%);
+  height: 1px; width: 1px; margin: -1px; overflow: hidden; padding: 0;
+  position: absolute !important; word-wrap: normal !important;
+}
+.skip-link:focus {
+  clip: auto; clip-path: none; height: auto; width: auto; margin: 0;
+  top: calc(var(--bh-admin) + 8px); left: 8px; z-index: 100000;
+  padding: 10px 14px; background: var(--bh-ink); color: var(--bh-white);
+}
+
+/* Logo bar: same on every page */
+.bh-top {
+  position: fixed;
+  top: calc(var(--bh-admin) + env(safe-area-inset-top, 0px));
+  left: 0; right: 0;
+  height: var(--bh-top-h);
+  z-index: 3;
+  background: var(--bh-white);
+  border-bottom: 1px solid var(--bh-line);
+  display: grid;
+  place-items: center;
+}
+.bh-logo img { width: auto; height: 46px; }
+
+/* Side figures: fixed, never scroll. They fill their panel top to bottom; the panel trims
+   the sides, centred. Swap them under Appearance → Customize → Side figures. */
+.bh-side {
+  position: fixed;
+  top: calc(var(--bh-admin) + var(--bh-top-h) + env(safe-area-inset-top, 0px));
+  bottom: calc(var(--bh-nav-h) + env(safe-area-inset-bottom, 0px));
+  width: calc((100vw - var(--bh-center)) / 2);
+  padding-top: 28px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.bh-side--left { left: 0; }
+.bh-side--right { right: 0; }
+.bh-side img {
+  width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: 50% 0%;
+}
+
+/* Centre column: the only thing that moves. */
+.bh-main {
+  width: var(--bh-center);
+  margin-inline: auto;
+  padding-top: calc(var(--bh-top-h) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--bh-nav-h) + env(safe-area-inset-bottom, 0px) + 32px);
+  position: relative;
+  z-index: 2;
+}
+
+/* Product grid. Lines sit between cells, never around the outside. */
+.bh-grid-clip { overflow: hidden; }
+.bh-grid {
+  list-style: none;
+  margin: 0 -1px -1px 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.bh-card { border-right: 1px solid var(--bh-line); border-bottom: 1px solid var(--bh-line); min-width: 0; }
+.bh-card a { display: grid; height: 100%; }
+.bh-card figure { margin: 0; aspect-ratio: 1; position: relative; max-width: 100%; }
+.bh-card figure img {
+  position: absolute; inset: 15%; width: 70%; height: 70%; max-width: none; object-fit: contain;
+  transition: transform .6s cubic-bezier(.2, .7, .2, 1);
+}
+.bh-card a:hover figure img { transform: translateY(-6px); }
+.bh-meta { display: grid; gap: 2px; padding: 0 18px 22px; align-content: start; }
+.bh-name { text-transform: uppercase; text-wrap: balance; }
+.bh-card a:hover .bh-name { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.bh-price { color: var(--bh-grey); font-variant-numeric: tabular-nums; }
+.bh-price del { opacity: .6; margin-right: 6px; }
+.bh-price ins { text-decoration: none; color: var(--bh-ink); }
+.bh-card--sold figure img { filter: grayscale(1); opacity: .55; }
+
+.bh-empty { padding: 48px 0; color: var(--bh-grey); text-align: center; text-transform: uppercase; }
+
+/* Bottom navigation */
+.bh-nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 3;
+  background: var(--bh-white);
+  border-top: 1px solid var(--bh-line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bh-nav-inner {
+  height: var(--bh-nav-h);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  text-transform: uppercase;
+}
+.bh-brand { font-weight: 500; letter-spacing: .28em; justify-self: start; }
+.bh-tabs { display: flex; gap: clamp(18px, 3vw, 44px); list-style: none; margin: 0; padding: 0; }
+.bh-tabs a, .bh-bag { color: var(--bh-grey); transition: color .2s; padding-block: 6px; }
+.bh-tabs a:hover, .bh-bag:hover { color: var(--bh-ink); }
+.bh-tabs a[aria-current="page"] {
+  color: var(--bh-ink);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+}
+.bh-bag { justify-self: end; font-variant-numeric: tabular-nums; }
+
+/* Text pages (About, Contact, Cart, Checkout, Account) and single products */
+.bh-content { padding: 48px 0 24px; }
+.bh-page-title {
+  margin: 0 0 32px; font: 500 14px/1.3 var(--bh-mono);
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.bh-prose { max-width: 64ch; font-size: 13px; line-height: 1.7; }
+.bh-prose > * + * { margin-top: 1.2em; }
+.bh-prose h2, .bh-prose h3 { font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; margin: 2em 0 .6em; }
+.bh-prose a { text-decoration: underline; text-underline-offset: 3px; }
+.bh-prose img { margin-block: 1.6em; }
+.bh-wide { max-width: none; }
+.bh-pagination { padding: 32px 0 0; display: flex; gap: 14px; justify-content: center; text-transform: uppercase; }
+.bh-pagination .current { text-decoration: underline; text-underline-offset: 5px; }
+
+/* Narrower screens: two columns, then figures step aside and the grid takes the width. */
+@media (max-width: 1160px) {
+  .bh-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  :root { --bh-center: 100vw; }
+  .bh-side { display: none; }
+  .bh-main {
+    width: auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+}
+@media (max-width: 560px) {
+  :root { --bh-top-h: 60px; --bh-nav-h: 84px; }
+  body { font-size: 11px; }
+  .bh-logo img { height: 38px; }
+  .bh-meta { padding: 0 12px 16px; }
+  .bh-nav-inner {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    height: auto;
+    row-gap: 10px;
+    padding-block: 12px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .bh-tabs { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; }
+  .bh-content { padding-top: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bh-card figure img, .bh-tabs a, .bh-bag { transition: none; }
+  .bh-card a:hover figure img { transform: none; }
+}
+
+/* WooCommerce: keep its layout, bring its buttons, fields and notices into the same type and colours. */
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button,
+.woocommerce #respond input#submit, .woocommerce a.button.alt, .woocommerce button.button.alt,
+.woocommerce input.button.alt, .woocommerce button.button.alt.disabled,
+.wc-block-components-button:not(.is-link) {
+  background: var(--bh-ink); color: var(--bh-white);
+  border: 1px solid var(--bh-ink); border-radius: 0;
+  font: 500 12px/1 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase;
+  padding: 16px 24px;
+}
+.woocommerce a.button:hover, .woocommerce button.button:hover, .woocommerce input.button:hover,
+.woocommerce a.button.alt:hover, .woocommerce button.button.alt:hover,
+.wc-block-components-button:not(.is-link):hover {
+  background: #333333; border-color: #333333; color: var(--bh-white);
+}
+.woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea,
+.woocommerce form .form-row select, .woocommerce .quantity .qty, .woocommerce select,
+.woocommerce div.product form.cart .variations select {
+  border: 1px solid var(--bh-line); border-radius: 0; background: var(--bh-white);
+  font: inherit; color: var(--bh-ink); padding: 10px 12px; min-height: 44px;
+}
+.woocommerce .quantity .qty { width: 4.5em; padding-inline: 6px; text-align: center; }
+.wc-block-components-text-input input, .wc-block-components-combobox .components-form-token-field__input,
+.wc-blocks-components-select__select, .wc-block-components-textarea {
+  border-radius: 0 !important; font-family: var(--bh-mono) !important;
+}
+.woocommerce div.product .product_title {
+  font: 500 16px/1.3 var(--bh-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+}
+.woocommerce div.product p.price, .woocommerce div.product span.price {
+  color: var(--bh-grey); font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.woocommerce div.product p.price ins, .woocommerce div.product span.price ins { text-decoration: none; color: var(--bh-ink); }
+.woocommerce div.product .stock { color: var(--bh-grey); text-transform: uppercase; }
+.woocommerce span.onsale {
+  background: var(--bh-ink); color: var(--bh-white); border-radius: 0;
+  min-height: 0; min-width: 0; line-height: 1; padding: 6px 8px; font-size: 11px; font-weight: 500;
+  top: 0; left: 0; margin: 0;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs { padding: 0; margin-bottom: 24px; }
+.woocommerce div.product .woocommerce-tabs ul.tabs::before { border-color: var(--bh-line); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+  background: none; border: 0; border-radius: 0; margin: 0 24px 0 0; padding: 0;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li::before,
+.woocommerce div.product .woocommerce-tabs ul.tabs li::after { display: none; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+  color: var(--bh-grey); font-weight: 400; text-transform: uppercase; padding: 10px 0;
+}
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  color: var(--bh-ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px;
+}
+.woocommerce div.product .woocommerce-tabs .panel { font-size: 13px; line-height: 1.7; }
+.woocommerce div.product .woocommerce-tabs .panel h2:first-of-type { display: none; }
+.woocommerce .related > h2, .woocommerce .upsells > h2, .woocommerce div.product .woocommerce-tabs .panel h2 {
+  font: 500 12px/1.3 var(--bh-mono); letter-spacing: .12em; text-transform: uppercase; margin: 56px 0 16px;
+}
+.woocommerce .product_meta { color: var(--bh-grey); font-size: 11px; text-transform: uppercase; }
+.woocommerce .product_meta a { text-decoration: underline; text-underline-offset: 3px; }
+.woocommerce .star-rating span::before, .woocommerce p.stars a { color: var(--bh-ink); }
+.woocommerce-message, .woocommerce-info, .woocommerce-error {
+  border-top-color: var(--bh-ink); background: var(--bh-soft); color: var(--bh-ink); border-radius: 0;
+}
+.woocommerce-message::before, .woocommerce-info::before { color: var(--bh-ink); }
+.woocommerce table.shop_table { border-radius: 0; border-color: var(--bh-line); }
+.woocommerce table.shop_table th, .woocommerce table.shop_table td { border-color: var(--bh-line); }
+.woocommerce .woocommerce-breadcrumb { color: var(--bh-grey); text-transform: uppercase; font-size: 11px; }
+.woocommerce .term-description, .woocommerce .page-description { padding: 24px 0; max-width: 64ch; }
+
+/* Product blocks WooCommerce places on Cart and Checkout (e.g. "New in store" under an empty cart). */
+.wp-block-button__link, .wc-block-grid__product-add-to-cart.wp-block-button .wp-block-button__link {
+  background: var(--bh-ink); color: var(--bh-white); border-radius: 0;
+  font: 500 11px/1 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase;
+  text-decoration: none; padding: 12px 18px;
+}
+.wp-block-button__link:hover { background: #333333; color: var(--bh-white); }
+.bh-prose .wc-block-grid__product-link { text-decoration: none; }
+.wc-block-grid__product-title {
+  font: 400 12px/1.5 var(--bh-mono) !important; letter-spacing: .04em; text-transform: uppercase;
+}
+.wc-block-grid__product-price { color: var(--bh-grey); }
+.wc-block-cart__empty-cart__title { font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase; }

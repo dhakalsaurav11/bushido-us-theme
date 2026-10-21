@@ -1,0 +1,4 @@
+_design/
+.DS_Store
+*.zip
+_test/

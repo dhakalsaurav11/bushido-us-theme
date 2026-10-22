@@ -64,15 +64,6 @@ bushido-us/
   assets/js/product-dialog.js  zoom, gallery, size picker, add to bag
 ```
 
-## Install
-
-1. Install and activate **WooCommerce**. Set the currency to USD with 0 decimals.
-2. Zip the `bushido-us` folder, then go to **Appearance → Themes → Add New → Upload Theme** and activate it.
-3. Create pages with the slugs `story`, `contact` and `archive`. They pick up their layouts automatically, and Story and Contact show default copy until you write your own. `story-content.html` and `contact-content.html` hold that copy as block markup: paste it into the page's Code editor to start editing.
-4. Optionally swap the side figures and logo under **Appearance → Customize**. Transparent cut-outs around 1,500 px work best.
-
-`product-images/` has the transparent product cut-outs the grid is designed around.
-
 ## Credits
 
 Design and development by [Saurav Dhakal](https://github.com/dhakalsaurav11). Product photography and brand assets © Bushido Nepal.

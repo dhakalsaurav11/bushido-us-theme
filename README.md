@@ -20,11 +20,15 @@ A custom WooCommerce theme for the US store of [Bushido](https://www.bushidonepa
 - Sizes are plain text toggles, and you can pick several at once. Each one becomes a separate WooCommerce variation in the bag. The add-to-cart requests run one after another, because parallel requests race on the cart session and drop items.
 - The Bag count updates through WooCommerce cart fragments, so it stays right on cached pages.
 
-**Story, Contact and Cart share an editorial layout.** The logo grows on the way in and shrinks on the way out, using cross-document View Transitions. The side figures keep their exact size and position but drop their crop, so the whole figure shows in front of the centre column. Text runs down the middle, one section per heading, and editors can write it in the block editor.
+**Story, Contact, Cart and Checkout share an editorial layout.** The logo grows on the way in and shrinks on the way out, using cross-document View Transitions. The side figures keep their exact size and position but drop their crop, so the whole figure shows in front of the centre column. Text runs down the middle, one section per heading, and editors can write it in the block editor.
 
-| Story | Contact | Cart |
-|---|---|---|
-| ![Story](docs/screenshots/story.jpg) | ![Contact](docs/screenshots/contact.jpg) | ![Cart](docs/screenshots/cart.jpg) |
+| Story | Contact |
+|---|---|
+| ![Story](docs/screenshots/story.jpg) | ![Contact](docs/screenshots/contact.jpg) |
+
+| Cart | Checkout |
+|---|---|
+| ![Cart](docs/screenshots/cart.jpg) | ![Checkout](docs/screenshots/checkout.jpg) |
 
 **Built for phones too.** The grid drops to two columns and the figures step aside. The product dialog becomes a full-screen sheet.
 

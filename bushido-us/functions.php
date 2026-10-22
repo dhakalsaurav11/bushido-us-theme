@@ -144,9 +144,9 @@ function bushido_nav_fallback() {
 	echo '</ul>';
 }
 
-/* Story, Contact (page-story.php, page-contact.php) and the Cart share a layout: large logo, side figures shown whole. */
+/* Story, Contact (page-story.php, page-contact.php), Cart and Checkout share a layout: large logo, side figures shown whole. */
 function bushido_is_story() {
-	if ( function_exists( 'is_cart' ) && is_cart() ) {
+	if ( function_exists( 'is_cart' ) && ( is_cart() || is_checkout() ) ) {
 		return true;
 	}
 	return is_page() && ( in_array( get_page_template_slug(), array( 'page-story.php', 'page-contact.php' ), true ) || is_page( array( 'story', 'contact' ) ) );

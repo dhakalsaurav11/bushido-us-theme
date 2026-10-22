@@ -1,64 +1,74 @@
-# Bushido US theme
+# Bushido US: WordPress storefront theme
 
-WordPress theme for us.bushidonepal.com, built from the "Bushido US Home" design.
-Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us/`.
+A custom WooCommerce theme for the US store of [Bushido](https://www.bushidonepal.com), a streetwear label from Kathmandu. Built from scratch as a classic PHP theme, replacing a page-builder setup with a quiet, monospace storefront: a hairline product grid between two fixed figures, products that open in place over the grid, and a few editorial pages.
 
-## Files
+**Live preview:** [us.bushidonepal.com](https://us.bushidonepal.com/?woo-share=Vn0wWj0TdheWI2WFfW20WQY29939wYSt) (the store is in pre-launch, so this is a share link)
 
-- `bushido-us.zip`: the theme, ready to upload in WordPress.
-- `bushido-us-product-images.zip`: the six transparent product cut-outs from the design.
-- `product-images/`: the same cut-outs, unzipped.
+![Home: the product grid between the two side figures](docs/screenshots/home.jpg)
 
-## Set up on WordPress
+## What's in it
 
-1. Plugins → Add New: install and activate **WooCommerce**. Skip or finish its setup wizard.
-2. WooCommerce → Settings → General: Currency **US dollar**, Number of decimals **0** (shows `$45`, not `$45.00`).
-3. Appearance → Themes → Add New → Upload Theme: upload `bushido-us.zip`, then **Activate**.
-4. Pages → Add New: create **Story**, **Archive**, **About** and **Contact**. A page with the slug `archive` uses the sold-out grid automatically.
-5. Products: import them, then set each product's main image (see below).
-6. Optional: Appearance → Menus, create a menu, add Home, Story, Archive, About and Contact, and assign it to **Bottom navigation**. Until you do, the theme shows those links itself.
+**Home is the shop.** In-stock products sit in a hairline grid where lines run between cells, never around the outside. Two cut-out figures stay fixed in the side panels while the grid scrolls between them. Sold-out pieces move to an Archive page instead.
 
-## How the pages work
+**Products open in place.** Clicking a product zooms the card into a dialog over a blurred page, with no page load.
 
-| Page | Shows |
-|---|---|
-| Home | The shop: in-stock products, in the order set under Products → Sorting |
-| Product | Opens as a dialog over Home: gallery with small thumbnails, `<` `>` arrows, sizes as text (several at once), Add to bag. A product's URL opens Home with its dialog showing |
-| Story (slug `story`) | Larger logo with no rule under it, which grows on the way in and shrinks on the way out (Chrome, Edge, Safari). The side figures keep exactly their usual size and position but aren't cropped at the panel edge, so the rest of each figure shows in front of the centre column. The text runs down the middle, one section per Heading 2. An empty page shows the text from bushidonepal.com/about-us |
-| Contact (slug `contact`) | Same layout as Story. An empty page shows "All sales are final.", the email address and Instagram. To edit, paste `contact-content.html` into the page's Code editor |
-| Archive (slug `archive`) | Sold-out products, greyed, labelled "Sold out" |
-| About, any other page | Page title and content |
-| Cart | Story layout: large logo, side figures shown whole, the cart down the middle. An empty cart shows only its message and the link home (no "New in store") |
-| Checkout, My account | WooCommerce's pages, restyled to match |
+![Product dialog](docs/screenshots/product-dialog.jpg)
 
-- WooCommerce's Shop page stays (WooCommerce needs it) but redirects to Home. Leave it out of the menu.
-- Picking several sizes adds one of each to the bag; quantities can be changed in the cart.
+- A native `<dialog>` with a FLIP animation from the card's position (Web Animations API). Esc, the backdrop, Close and the browser's Back button all close it.
+- The product's URL is pushed to history, so links are shareable. Opening one directly renders Home with that dialog already open.
+- Dialog content is server-rendered into an inert `<template>` next to each card. It opens instantly and still works behind page caching.
+- Sizes are plain text toggles, and you can pick several at once. Each one becomes a separate WooCommerce variation in the bag. The add-to-cart requests run one after another, because parallel requests race on the cart session and drop items.
+- The Bag count updates through WooCommerce cart fragments, so it stays right on cached pages.
 
-- To change the side figures: Appearance → Customize → Side figures.
-- To change the logo: Appearance → Customize → Site Identity → Logo.
+**Story, Contact and Cart share an editorial layout.** The logo grows on the way in and shrinks on the way out, using cross-document View Transitions. The side figures keep their exact size and position but drop their crop, so the whole figure shows in front of the centre column. Text runs down the middle, one section per heading, and editors can write it in the block editor.
 
-## Importing products from bushidonepal.com
+| Story | Contact | Cart |
+|---|---|---|
+| ![Story](docs/screenshots/story.jpg) | ![Contact](docs/screenshots/contact.jpg) | ![Cart](docs/screenshots/cart.jpg) |
 
-1. On the main site: Products → Export → CSV.
-2. On the US site: Products → Import → upload the CSV.
-3. Prices: the main store's currency is already USD, but several products have Nepali-rupee amounts typed in as dollars. Fix them on each **variation** (Product data → Variations), not just the parent product. As of Oct 2026 these were:
-   - Dragon Hooded Sleeveless Zip-up Vest: $2,800
-   - Ryujin Long Sleeves, Olive Green and Black: $2,500
-   - Twin Dragon double layered tees: $1,999
-   - The Flow State Tees: $1,500
-   - Embroidered Sakura Pants: $3,500
-   - Year of the Dragon Kimono: $2,500
+**Built for phones too.** The grid drops to two columns and the figures step aside. The product dialog becomes a full-screen sheet.
 
-   The rest ($35 jerseys, $50 hoodies and so on) look like real USD prices. Nearly every product is a variable product with a Size option, and the theme handles that.
-4. Images: the grid is designed for transparent cut-outs. Edit each product, set the cut-out from `bushido-us-product-images.zip` as its **Product image**, and move the old photo into the Product gallery.
+<p>
+  <img src="docs/screenshots/home-phone.jpg" alt="Home on a phone" width="260">
+  <img src="docs/screenshots/product-dialog-phone.jpg" alt="Product dialog on a phone" width="260">
+</p>
 
-## Local test
+## How it's built
 
-`_test/` (git-ignored) holds a WordPress Playground blueprint with WooCommerce and sample products:
+- **Classic PHP theme**, no page builder and no build step. One stylesheet (`style.css`) and one small vanilla-JS file for the dialog (`assets/js/product-dialog.js`).
+- **WooCommerce** through a handful of template overrides (`woocommerce/`), so every product loop, including categories, uses the same card. Every WooCommerce call is guarded, so the theme still renders if the plugin is off.
+- **Variable products** are handled generically. Size is the multi-select option, any other attribute (like Colour) is single-select, and sold-out variations are disabled.
+- **Empty cart** shows only its message: the theme skips WooCommerce's "New in store" block with `pre_render_block`.
+- **Editor-friendly.** The side figures and logo can be swapped in the Customizer. Story and Contact fall back to default copy while their pages are empty.
+- **Tested locally** against WordPress Playground with WooCommerce and realistic sample products. A Puppeteer script clicks through the dialog: open and close by every route, gallery, multi-size add to bag, cart lines, deep links, the Shop redirect and phone widths.
+
+## Structure
 
 ```
-cd _test
-npx @wp-playground/cli@3.1.60 server --port=9400 \
-  --mount=../bushido-us:/wordpress/wp-content/themes/bushido-us \
-  --mount=./seed:/seed --blueprint=./blueprint.json
+bushido-us/
+  style.css                    theme header and all styles
+  functions.php                setup, WooCommerce wiring, helpers
+  header.php / footer.php      logo bar, side figures, bottom nav, dialog element
+  front-page.php               Home (the shop)
+  woocommerce.php              product URLs and categories
+  page-story.php               Story
+  page-contact.php             Contact
+  page-archive.php             sold-out Archive
+  page.php / index.php         other pages, Cart, fallbacks
+  template-parts/              product card, product dialog, home grid, story layout
+  woocommerce/                 loop and card overrides
+  assets/js/product-dialog.js  zoom, gallery, size picker, add to bag
 ```
+
+## Install
+
+1. Install and activate **WooCommerce**. Set the currency to USD with 0 decimals.
+2. Zip the `bushido-us` folder, then go to **Appearance → Themes → Add New → Upload Theme** and activate it.
+3. Create pages with the slugs `story`, `contact` and `archive`. They pick up their layouts automatically, and Story and Contact show default copy until you write your own. `story-content.html` and `contact-content.html` hold that copy as block markup: paste it into the page's Code editor to start editing.
+4. Optionally swap the side figures and logo under **Appearance → Customize**. Transparent cut-outs around 1,500 px work best.
+
+`product-images/` has the transparent product cut-outs the grid is designed around.
+
+## Credits
+
+Design and development by [Saurav Dhakal](https://github.com/dhakalsaurav11). Product photography and brand assets © Bushido Nepal.

@@ -2,3 +2,5 @@ _design/
 .DS_Store
 *.zip
 _test/
+SETUP-NOTES.md
+bushido-us-product-images/

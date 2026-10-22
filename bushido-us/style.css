@@ -298,6 +298,13 @@ body.bh-story-page .bh-side img {
 .bh-story-panel p { margin: 0; color: #444444; }
 .bh-story-panel p + p { margin-top: .9em; }
 .bh-story-panel a { text-decoration: underline; text-underline-offset: 3px; }
+/* Images and buttons added in the editor sit flush with the text column. */
+.bh-story-panel figure { margin: 1.4em 0; }
+.bh-story-panel figure:first-child { margin-top: 0; }
+.bh-story-panel figure img { width: 100%; height: auto; }
+.bh-story-panel figcaption { margin-top: 8px; color: var(--bh-grey); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+.bh-story-panel .wp-block-buttons { margin-top: 1.2em; }
+.bh-story-panel .wp-block-button__link { padding: 14px 22px; font-size: 12px; }
 .bh-story-panel .bh-story-cta {
   display: inline-block; margin-top: 8px; padding: 14px 22px;
   background: var(--bh-ink); color: var(--bh-white);

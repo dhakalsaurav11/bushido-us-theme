@@ -144,9 +144,9 @@ function bushido_nav_fallback() {
 	echo '</ul>';
 }
 
-/* Story page (page-story.php): the side figures move into the centre column there. */
+/* Story and Contact (page-story.php, page-contact.php) share a layout: large logo, side figures shown whole. */
 function bushido_is_story() {
-	return is_page() && ( 'page-story.php' === get_page_template_slug() || is_page( 'story' ) );
+	return is_page() && ( in_array( get_page_template_slug(), array( 'page-story.php', 'page-contact.php' ), true ) || is_page( array( 'story', 'contact' ) ) );
 }
 
 add_filter( 'body_class', function ( $classes ) {
@@ -180,6 +180,19 @@ function bushido_story_default() {
 	<h2>The next chapter is worn.</h2>
 	<p>Explore the current collection and find the piece that becomes part of your own story.</p>
 	<p><a class="bh-story-cta" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Shop the current drop', 'bushido-us' ); ?></a></p>
+	<?php
+	return ob_get_clean();
+}
+
+/* Shown while the Contact page has no content of its own. */
+function bushido_contact_default() {
+	ob_start();
+	?>
+	<h2>All sales are final.</h2>
+	<h2>Email</h2>
+	<p><a href="mailto:admin@bushidonepal.com">admin@bushidonepal.com</a></p>
+	<h2>Instagram</h2>
+	<p><a href="https://www.instagram.com/bushidonepal/" target="_blank" rel="noopener">@bushidonepal</a></p>
 	<?php
 	return ob_get_clean();
 }

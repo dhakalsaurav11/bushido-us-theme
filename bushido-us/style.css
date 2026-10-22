@@ -263,20 +263,25 @@ a { color: inherit; text-decoration: none; }
 .wc-block-grid__product-price { color: var(--bh-grey); }
 .wc-block-cart__empty-cart__title { font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase; }
 
-/* Story page: a large logo with no rule under it, and the side figures shown whole, in front of
-   the centre column, anchored to the outer edges. Their width stops at the text lane, so they
-   never cover the story. */
+/* Story page: a large logo with no rule under it. The side figures keep exactly the size and
+   position they have on every other page; the only difference is that the parts normally trimmed
+   at the panel's edge now show too, in front of the centre column. */
 body.bh-story-page { --bh-top-h: 168px; --bh-story-lane: 560px; }
 body.bh-story-page .bh-top { border-bottom: 0; }
 body.bh-story-page .bh-logo img { height: 128px; }
 body.bh-story-page .bh-side {
   z-index: 3;
-  width: calc((100vw - var(--bh-story-lane)) / 2);
-  padding-top: 0;
+  overflow: visible;
+  top: calc(var(--bh-admin) + 72px + env(safe-area-inset-top, 0px)); /* the standard logo bar height */
 }
-body.bh-story-page .bh-side img { object-fit: contain; }
-body.bh-story-page .bh-side--left img { object-position: left bottom; }
-body.bh-story-page .bh-side--right img { object-position: right bottom; }
+/* Same scale and centring as the cropped image (height fills the panel, centred left to right),
+   just without the crop. */
+body.bh-story-page .bh-side img {
+  position: absolute; top: 28px; left: 50%;
+  width: auto; height: calc(100% - 28px); min-width: 100%;
+  transform: translateX(-50%);
+  object-fit: cover; object-position: 50% 0%;
+}
 .bh-story { width: min(100%, calc(var(--bh-story-lane) - 40px)); margin-inline: auto; padding: 24px 0 48px; }
 .bh-story-panel {
   padding: 32px 0;

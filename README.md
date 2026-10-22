@@ -24,7 +24,7 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 |---|---|
 | Home | The shop: in-stock products, in the order set under Products → Sorting |
 | Product | Opens as a dialog over Home: gallery with small thumbnails, `<` `>` arrows, sizes as text (several at once), Add to bag. A product's URL opens Home with its dialog showing |
-| Story (slug `story`) | Larger logo, the two side figures together as one fixed backdrop, and the text in white panels scrolling over them. One panel per heading (Heading 2) in the page editor; an empty page shows the text from bushidonepal.com/about-us |
+| Story (slug `story`) | Larger logo with no rule under it, which grows on the way in and shrinks on the way out (Chrome, Edge, Safari). The side figures show whole and in front of the centre column; the text runs down the middle, one section per Heading 2. An empty page shows the text from bushidonepal.com/about-us |
 | Archive (slug `archive`) | Sold-out products, greyed, labelled "Sold out" |
 | About, Contact, any page | Page title and content |
 | Cart, Checkout, My account | WooCommerce's pages, restyled to match |

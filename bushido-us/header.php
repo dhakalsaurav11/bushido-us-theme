@@ -19,8 +19,7 @@
 	</a>
 </header>
 
-<?php // The Story page draws these figures in its centre column instead. ?>
-<?php foreach ( bushido_is_story() ? array() : array( 'left', 'right' ) as $bushido_side ) : $bushido_img = bushido_side_image( $bushido_side ); ?>
+<?php foreach ( array( 'left', 'right' ) as $bushido_side ) : $bushido_img = bushido_side_image( $bushido_side ); ?>
 <aside class="bh-side bh-side--<?php echo esc_attr( $bushido_side ); ?>" aria-hidden="true">
 	<img src="<?php echo esc_url( $bushido_img['src'] ); ?>" alt=""<?php if ( $bushido_img['width'] ) : ?> width="<?php echo (int) $bushido_img['width']; ?>" height="<?php echo (int) $bushido_img['height']; ?>"<?php endif; ?>>
 </aside>

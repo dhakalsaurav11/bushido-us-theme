@@ -3,8 +3,8 @@
  * Template Name: Story
  *
  * Used automatically by a page with the slug "story", or pick it from the page's Template setting.
- * The two side figures move into the centre column as one fixed backdrop and the text scrolls
- * over them in white panels, one per heading. An empty page shows the default story text.
+ * The side figures show whole here, in front of the centre column, and the text runs down the
+ * middle in hairline sections, one per heading. An empty page shows the default story text.
  */
 
 get_header();
@@ -14,12 +14,6 @@ while ( have_posts() ) :
 	$bushido_content = trim( get_the_content() ) ? apply_filters( 'the_content', get_the_content() ) : bushido_story_default();
 	?>
 	<h1 class="screen-reader-text"><?php the_title(); ?></h1>
-
-	<div class="bh-story-figures" aria-hidden="true">
-		<?php foreach ( array( 'left', 'right' ) as $bushido_side ) : $bushido_img = bushido_side_image( $bushido_side ); ?>
-			<img class="bh-story-figure bh-story-figure--<?php echo esc_attr( $bushido_side ); ?>" src="<?php echo esc_url( $bushido_img['src'] ); ?>" alt="">
-		<?php endforeach; ?>
-	</div>
 
 	<div class="bh-story">
 		<?php foreach ( bushido_story_sections( $bushido_content ) as $bushido_section ) : ?>

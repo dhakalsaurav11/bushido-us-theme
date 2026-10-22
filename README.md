@@ -16,17 +16,20 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 3. Appearance → Themes → Add New → Upload Theme: upload `bushido-us.zip`, then **Activate**.
 4. Pages → Add New: create **Archive**, **About** and **Contact**. A page with the slug `archive` uses the sold-out grid automatically.
 5. Products: import them, then set each product's main image (see below).
-6. Optional: Appearance → Menus, create a menu, add Home, Shop, Archive, About and Contact, and assign it to **Bottom navigation**. Until you do, the theme shows those links itself.
+6. Optional: Appearance → Menus, create a menu, add Home, Archive, About and Contact, and assign it to **Bottom navigation**. Until you do, the theme shows those links itself.
 
 ## How the pages work
 
 | Page | Shows |
 |---|---|
-| Home | In-stock products, in the order set under Products → Sorting |
-| Shop and categories | In-stock products |
+| Home | The shop: in-stock products, in the order set under Products → Sorting |
+| Product | Opens as a dialog over Home: gallery with small thumbnails, `<` `>` arrows, sizes as text (several at once), Add to bag. A product's URL opens Home with its dialog showing |
 | Archive (slug `archive`) | Sold-out products, greyed, labelled "Sold out" |
 | About, Contact, any page | Page title and content |
-| Product, Cart, Checkout, My account | WooCommerce's pages, restyled to match |
+| Cart, Checkout, My account | WooCommerce's pages, restyled to match |
+
+- WooCommerce's Shop page stays (WooCommerce needs it) but redirects to Home. Leave it out of the menu.
+- Picking several sizes adds one of each to the bag; quantities can be changed in the cart.
 
 - To change the side figures: Appearance → Customize → Side figures.
 - To change the logo: Appearance → Customize → Site Identity → Logo.

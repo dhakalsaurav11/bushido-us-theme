@@ -157,7 +157,6 @@ a { color: inherit; text-decoration: none; }
   padding-right: max(24px, env(safe-area-inset-right, 0px));
   text-transform: uppercase;
 }
-.bh-brand { font-weight: 500; letter-spacing: .28em; justify-self: start; }
 .bh-tabs { display: flex; gap: clamp(18px, 3vw, 44px); list-style: none; margin: 0; padding: 0; }
 .bh-tabs a, .bh-bag { color: var(--bh-grey); transition: color .2s; padding-block: 6px; }
 .bh-tabs a:hover, .bh-bag:hover { color: var(--bh-ink); }
@@ -169,7 +168,7 @@ a { color: inherit; text-decoration: none; }
 }
 .bh-bag { justify-self: end; font-variant-numeric: tabular-nums; }
 
-/* Text pages (About, Contact, Cart, Checkout, Account) and single products */
+/* Text pages (About, Contact, Cart, Checkout, Account) */
 .bh-content { padding: 48px 0 24px; }
 .bh-page-title {
   margin: 0 0 32px; font: 500 14px/1.3 var(--bh-mono);
@@ -199,20 +198,17 @@ a { color: inherit; text-decoration: none; }
   }
 }
 @media (max-width: 560px) {
-  :root { --bh-top-h: 60px; --bh-nav-h: 84px; }
+  :root { --bh-top-h: 60px; }
   body { font-size: 11px; }
   .bh-logo img { height: 38px; }
   .bh-meta { padding: 0 12px 16px; }
   .bh-nav-inner {
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    height: auto;
-    row-gap: 10px;
-    padding-block: 12px;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
-  .bh-tabs { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; }
+  .bh-nav-spacer { display: none; }
+  .bh-tabs { gap: 18px; flex-wrap: wrap; }
   .bh-content { padding-top: 32px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -236,52 +232,14 @@ a { color: inherit; text-decoration: none; }
   background: #333333; border-color: #333333; color: var(--bh-white);
 }
 .woocommerce form .form-row input.input-text, .woocommerce form .form-row textarea,
-.woocommerce form .form-row select, .woocommerce .quantity .qty, .woocommerce select,
-.woocommerce div.product form.cart .variations select {
+.woocommerce form .form-row select, .woocommerce select {
   border: 1px solid var(--bh-line); border-radius: 0; background: var(--bh-white);
   font: inherit; color: var(--bh-ink); padding: 10px 12px; min-height: 44px;
 }
-.woocommerce .quantity .qty { width: 4.5em; padding-inline: 6px; text-align: center; }
 .wc-block-components-text-input input, .wc-block-components-combobox .components-form-token-field__input,
 .wc-blocks-components-select__select, .wc-block-components-textarea {
   border-radius: 0 !important; font-family: var(--bh-mono) !important;
 }
-.woocommerce div.product .product_title {
-  font: 500 16px/1.3 var(--bh-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
-}
-.woocommerce div.product p.price, .woocommerce div.product span.price {
-  color: var(--bh-grey); font-size: 14px; font-variant-numeric: tabular-nums;
-}
-.woocommerce div.product p.price ins, .woocommerce div.product span.price ins { text-decoration: none; color: var(--bh-ink); }
-.woocommerce div.product form.cart .variations th.label { padding-right: 16px; vertical-align: middle; }
-.woocommerce div.product form.cart .variations label { font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
-.woocommerce div.product .stock { color: var(--bh-grey); text-transform: uppercase; }
-.woocommerce span.onsale {
-  background: var(--bh-ink); color: var(--bh-white); border-radius: 0;
-  min-height: 0; min-width: 0; line-height: 1; padding: 6px 8px; font-size: 11px; font-weight: 500;
-  top: 0; left: 0; margin: 0;
-}
-.woocommerce div.product .woocommerce-tabs ul.tabs { padding: 0; margin-bottom: 24px; }
-.woocommerce div.product .woocommerce-tabs ul.tabs::before { border-color: var(--bh-line); }
-.woocommerce div.product .woocommerce-tabs ul.tabs li {
-  background: none; border: 0; border-radius: 0; margin: 0 24px 0 0; padding: 0;
-}
-.woocommerce div.product .woocommerce-tabs ul.tabs li::before,
-.woocommerce div.product .woocommerce-tabs ul.tabs li::after { display: none; }
-.woocommerce div.product .woocommerce-tabs ul.tabs li a {
-  color: var(--bh-grey); font-weight: 400; text-transform: uppercase; padding: 10px 0;
-}
-.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
-  color: var(--bh-ink); text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px;
-}
-.woocommerce div.product .woocommerce-tabs .panel { font-size: 13px; line-height: 1.7; }
-.woocommerce div.product .woocommerce-tabs .panel h2:first-of-type { display: none; }
-.woocommerce .related > h2, .woocommerce .upsells > h2, .woocommerce div.product .woocommerce-tabs .panel h2 {
-  font: 500 12px/1.3 var(--bh-mono); letter-spacing: .12em; text-transform: uppercase; margin: 56px 0 16px;
-}
-.woocommerce .product_meta { color: var(--bh-grey); font-size: 11px; text-transform: uppercase; }
-.woocommerce .product_meta a { text-decoration: underline; text-underline-offset: 3px; }
-.woocommerce .star-rating span::before, .woocommerce p.stars a { color: var(--bh-ink); }
 .woocommerce-message, .woocommerce-info, .woocommerce-error {
   border-top-color: var(--bh-ink); background: var(--bh-soft); color: var(--bh-ink); border-radius: 0;
 }
@@ -304,3 +262,83 @@ a { color: inherit; text-decoration: none; }
 }
 .wc-block-grid__product-price { color: var(--bh-grey); }
 .wc-block-cart__empty-cart__title { font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase; }
+
+/* Product dialog: opens over the grid with the page blurred behind it. */
+html:has(.bh-dialog[open]) { overflow: hidden; }
+.bh-dialog {
+  padding: 0; border: 0; background: transparent; color: var(--bh-ink);
+  width: min(1000px, calc(100vw - 48px)); max-width: none;
+  max-height: calc(100dvh - 48px); overflow: visible;
+}
+.bh-dialog::backdrop {
+  background: rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.bh-dialog[open]::backdrop { animation: bh-fade .3s ease both; }
+@keyframes bh-fade { from { opacity: 0; } }
+.bh-dialog :focus-visible { outline-offset: 2px; }
+.bh-pd {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  max-height: calc(100dvh - 48px); overflow: auto;
+  background: var(--bh-white); border: 1px solid var(--bh-line);
+}
+.bh-pd button { font: inherit; letter-spacing: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.bh-pd-close {
+  position: absolute; top: 14px; right: 16px; z-index: 1;
+  padding: 6px 4px; color: var(--bh-grey) !important; text-transform: uppercase;
+}
+.bh-pd-close:hover { color: var(--bh-ink) !important; }
+
+.bh-pd-media { border-right: 1px solid var(--bh-line); padding: 28px; display: grid; gap: 14px; align-content: start; }
+.bh-pd-stage { aspect-ratio: 1; position: relative; }
+.bh-pd-stage img { position: absolute; inset: 4%; width: 92%; height: 92%; max-width: none; object-fit: contain; }
+.bh-pd-nav { display: flex; align-items: center; justify-content: space-between; color: var(--bh-grey); font-variant-numeric: tabular-nums; }
+.bh-pd-arrow { padding: 6px 10px; color: var(--bh-grey) !important; }
+.bh-pd-arrow:hover { color: var(--bh-ink) !important; }
+.bh-pd-thumbs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.bh-pd-thumbs button { display: block; width: 40px; height: 40px; padding: 0; border: 1px solid transparent !important; opacity: .45; transition: opacity .2s; }
+.bh-pd-thumbs button:hover { opacity: .8; }
+.bh-pd-thumbs button[aria-current="true"] { border-color: var(--bh-ink) !important; opacity: 1; }
+.bh-pd-thumbs img { width: 100%; height: 100%; object-fit: contain; }
+
+.bh-pd-info { padding: 56px 32px 32px; display: grid; gap: 20px; align-content: start; }
+.bh-pd-name { margin: 0; padding-right: 48px; font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase; text-wrap: balance; }
+.bh-pd-price { margin: -12px 0 0; color: var(--bh-grey); font-variant-numeric: tabular-nums; }
+.bh-pd-price del { opacity: .6; margin-right: 6px; }
+.bh-pd-price ins { text-decoration: none; color: var(--bh-ink); }
+.bh-pd-desc { color: #444444; line-height: 1.7; }
+.bh-pd-desc > * { margin: 0 0 .9em; }
+.bh-pd-desc > :last-child { margin-bottom: 0; }
+
+/* Size and other options: plain text, picked like the nav's current page. */
+.bh-pd-opts { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 22px; }
+.bh-pd-label { flex-basis: 100%; color: var(--bh-grey); text-transform: uppercase; margin-bottom: 2px; }
+.bh-pd-opt { padding: 6px 0; color: var(--bh-grey) !important; text-transform: uppercase; transition: color .2s; }
+.bh-pd-opt:hover { color: var(--bh-ink) !important; }
+.bh-pd-opt[aria-pressed="true"] {
+  color: var(--bh-ink) !important;
+  text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px;
+}
+.bh-pd-opt:disabled { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+.bh-pd-add {
+  margin-top: 4px; padding: 16px 24px; width: 100%;
+  background: var(--bh-ink) !important; color: var(--bh-white) !important;
+  font-weight: 500 !important; letter-spacing: .1em !important; text-transform: uppercase;
+}
+.bh-pd-add:hover:not(:disabled) { background: #333333 !important; }
+.bh-pd-add:disabled { background: var(--bh-line) !important; color: var(--bh-grey) !important; cursor: default; }
+.bh-pd-status { margin: -8px 0 0; min-height: 1.5em; color: var(--bh-grey); }
+.bh-pd-sold { margin: 0; color: var(--bh-grey); text-transform: uppercase; }
+
+@media (max-width: 760px) {
+  .bh-dialog { width: 100vw; max-height: 100dvh; height: 100dvh; margin: 0; }
+  .bh-pd { grid-template-columns: minmax(0, 1fr); height: 100dvh; max-height: 100dvh; border: 0; align-content: start; }
+  .bh-pd-media { border-right: 0; border-bottom: 1px solid var(--bh-line); padding: 48px 16px 16px; }
+  .bh-pd-info { padding: 24px 16px calc(32px + env(safe-area-inset-bottom, 0px)); }
+  .bh-pd-close { top: 10px; right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bh-dialog[open]::backdrop { animation: none; }
+  .bh-pd-opt, .bh-pd-thumbs button { transition: none; }
+}

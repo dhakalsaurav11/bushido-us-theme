@@ -7,7 +7,7 @@
 
 <nav class="bh-nav" aria-label="<?php esc_attr_e( 'Main', 'bushido-us' ); ?>">
 	<div class="bh-nav-inner">
-		<a class="bh-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Bushido', 'bushido-us' ); ?></a>
+		<span class="bh-nav-spacer" aria-hidden="true"></span>
 		<?php
 		wp_nav_menu( array(
 			'theme_location' => 'primary',
@@ -20,6 +20,10 @@
 		<?php echo bushido_bag_link(); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside. ?>
 	</div>
 </nav>
+
+<?php if ( bushido_has_woo() ) : ?>
+<dialog class="bh-dialog"></dialog>
+<?php endif; ?>
 
 <?php wp_footer(); ?>
 </body>

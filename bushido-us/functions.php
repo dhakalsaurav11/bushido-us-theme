@@ -25,9 +25,6 @@ add_action( 'after_setup_theme', function () {
 		'thumbnail_image_width' => 600,
 		'single_image_width'    => 900,
 	) );
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
-	add_theme_support( 'wc-product-gallery-slider' );
 
 	register_nav_menus( array(
 		'primary' => __( 'Bottom navigation', 'bushido-us' ),
@@ -41,9 +38,18 @@ add_action( 'wp_enqueue_scripts', function () {
 	$path = get_stylesheet_directory() . '/style.css';
 	wp_enqueue_style( 'bushido-us', get_stylesheet_uri(), $deps, file_exists( $path ) ? (string) filemtime( $path ) : null );
 
-	// Keeps the Bag count right after AJAX add-to-cart and on cached pages.
 	if ( bushido_has_woo() ) {
+		// Keeps the Bag count right after add-to-cart and on cached pages.
 		wp_enqueue_script( 'wc-cart-fragments' );
+
+		$js = get_template_directory() . '/assets/js/product-dialog.js';
+		wp_enqueue_script( 'bushido-product-dialog', get_template_directory_uri() . '/assets/js/product-dialog.js', array( 'wc-cart-fragments' ), file_exists( $js ) ? (string) filemtime( $js ) : null, array( 'in_footer' => true ) );
+		wp_localize_script( 'bushido-product-dialog', 'bushidoDialog', array(
+			'addUrl'   => WC_AJAX::get_endpoint( 'add_to_cart' ),
+			'home'     => home_url( '/' ),
+			'siteName' => get_bloginfo( 'name' ),
+			'open'     => is_singular( 'product' ) ? get_queried_object_id() : 0,
+		) );
 	}
 } );
 
@@ -116,13 +122,10 @@ add_filter( 'woocommerce_add_to_cart_fragments', function ( $fragments ) {
 	return $fragments;
 } );
 
-/* Used when no menu is assigned to the bottom navigation yet: Home, Shop, then any of the
+/* Used when no menu is assigned to the bottom navigation yet: Home, then any of the
    Archive, About and Contact pages that exist. */
 function bushido_nav_fallback() {
 	$items = array( array( home_url( '/' ), __( 'Home', 'bushido-us' ), is_front_page() ) );
-	if ( bushido_has_woo() ) {
-		$items[] = array( get_permalink( wc_get_page_id( 'shop' ) ), __( 'Shop', 'bushido-us' ), is_shop() );
-	}
 	foreach ( array( 'archive', 'about', 'contact' ) as $slug ) {
 		$page = get_page_by_path( $slug );
 		if ( $page ) {
@@ -141,7 +144,7 @@ function bushido_nav_fallback() {
 	echo '</ul>';
 }
 
-/* Product grid used by Home, Shop and Archive. */
+/* Product grid used by Home, Archive and product categories. */
 function bushido_grid( $products ) {
 	echo '<div class="bh-grid-clip"><ul class="bh-grid">';
 	foreach ( $products as $product ) {
@@ -183,9 +186,14 @@ if ( bushido_has_woo() ) {
 		$q->set( 'tax_query', $tax );
 	} );
 
-	add_filter( 'woocommerce_output_related_products_args', function ( $args ) {
-		$args['posts_per_page'] = 3;
-		$args['columns']        = 3;
-		return $args;
+	// Home is the shop. WooCommerce still needs its Shop page, so keep it but send visitors home,
+	// along with WooCommerce's own "Return to shop" and "Browse store" links.
+	add_action( 'template_redirect', function () {
+		if ( is_shop() && ! is_front_page() && ! is_search() ) {
+			wp_safe_redirect( home_url( '/' ), 301 );
+			exit;
+		}
 	} );
+	add_filter( 'woocommerce_return_to_shop_redirect', fn() => home_url( '/' ) );
+	add_filter( 'woocommerce_get_shop_page_permalink', fn() => home_url( '/' ) );
 }

@@ -2,7 +2,7 @@
 
 A custom WooCommerce theme for the US store of [Bushido](https://www.bushidonepal.com), a streetwear label from Kathmandu. Built from scratch as a classic PHP theme, replacing a page-builder setup with a quiet, monospace storefront: a hairline product grid between two fixed figures, products that open in place over the grid, and a few editorial pages.
 
-**Live preview:** [us.bushidonepal.com](https://us.bushidonepal.com/?woo-share=Vn0wWj0TdheWI2WFfW20WQY29939wYSt) (the store is in pre-launch, so this is a share link)
+**Live preview:** [us.bushidonepal.com](https://us.bushidonepal.com/)
 
 ![Home: the product grid between the two side figures](docs/screenshots/home.jpg)
 

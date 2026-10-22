@@ -144,8 +144,11 @@ function bushido_nav_fallback() {
 	echo '</ul>';
 }
 
-/* Story and Contact (page-story.php, page-contact.php) share a layout: large logo, side figures shown whole. */
+/* Story, Contact (page-story.php, page-contact.php) and the Cart share a layout: large logo, side figures shown whole. */
 function bushido_is_story() {
+	if ( function_exists( 'is_cart' ) && is_cart() ) {
+		return true;
+	}
 	return is_page() && ( in_array( get_page_template_slug(), array( 'page-story.php', 'page-contact.php' ), true ) || is_page( array( 'story', 'contact' ) ) );
 }
 
@@ -248,5 +251,20 @@ if ( bushido_has_woo() ) {
 		}
 	} );
 	add_filter( 'woocommerce_return_to_shop_redirect', fn() => home_url( '/' ) );
+
+	// The empty cart shows only its message and the link home: skip the divider, the
+	// "New in store" heading and the product row WooCommerce puts under it.
+	add_filter( 'pre_render_block', function ( $pre, $block, $parent ) {
+		if ( ! $parent instanceof WP_Block || 'woocommerce/empty-cart-block' !== $parent->name ) {
+			return $pre;
+		}
+		$name = $block['blockName'] ?? '';
+		$slug = $block['attrs']['slug'] ?? '';
+		if ( in_array( $name, array( 'core/separator', 'woocommerce/product-new', 'woocommerce/product-collection' ), true )
+			|| ( 'core/pattern' === $name && 'woocommerce/cart-new-in-store-message' === $slug ) ) {
+			return '';
+		}
+		return $pre;
+	}, 10, 3 );
 	add_filter( 'woocommerce_get_shop_page_permalink', fn() => home_url( '/' ) );
 }

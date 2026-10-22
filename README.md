@@ -28,7 +28,8 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 | Contact (slug `contact`) | Same layout as Story. An empty page shows "All sales are final.", the email address and Instagram. To edit, paste `contact-content.html` into the page's Code editor |
 | Archive (slug `archive`) | Sold-out products, greyed, labelled "Sold out" |
 | About, any other page | Page title and content |
-| Cart, Checkout, My account | WooCommerce's pages, restyled to match |
+| Cart | Story layout: large logo, side figures shown whole, the cart down the middle. An empty cart shows only its message and the link home (no "New in store") |
+| Checkout, My account | WooCommerce's pages, restyled to match |
 
 - WooCommerce's Shop page stays (WooCommerce needs it) but redirects to Home. Leave it out of the menu.
 - Picking several sizes adds one of each to the bag; quantities can be changed in the cart.

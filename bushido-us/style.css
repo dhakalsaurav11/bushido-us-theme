@@ -311,6 +311,14 @@ body.bh-story-page .bh-side img {
   font-weight: 500; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
 }
 .bh-story-panel .bh-story-cta:hover { background: #333333; }
+/* The cart in the Story lane: WooCommerce stacks its totals under the items at this width. */
+.bh-story--cart { padding-top: 8px; }
+.bh-story--cart .wc-block-cart__empty-cart__title { margin-top: 24px; }
+.bh-story--cart .wc-block-components-product-name { font-weight: 400; text-transform: uppercase; letter-spacing: .04em; }
+.bh-story--cart .wc-block-components-totals-footer-item .wc-block-components-totals-item__label,
+.bh-story--cart .wc-block-components-totals-footer-item .wc-block-components-totals-item__value {
+  font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase;
+}
 @media (max-width: 900px) {
   .bh-story { width: auto; }
 }

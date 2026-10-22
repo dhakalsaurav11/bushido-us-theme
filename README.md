@@ -14,9 +14,9 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 1. Plugins → Add New: install and activate **WooCommerce**. Skip or finish its setup wizard.
 2. WooCommerce → Settings → General: Currency **US dollar**, Number of decimals **0** (shows `$45`, not `$45.00`).
 3. Appearance → Themes → Add New → Upload Theme: upload `bushido-us.zip`, then **Activate**.
-4. Pages → Add New: create **Archive**, **About** and **Contact**. A page with the slug `archive` uses the sold-out grid automatically.
+4. Pages → Add New: create **Story**, **Archive**, **About** and **Contact**. A page with the slug `archive` uses the sold-out grid automatically.
 5. Products: import them, then set each product's main image (see below).
-6. Optional: Appearance → Menus, create a menu, add Home, Archive, About and Contact, and assign it to **Bottom navigation**. Until you do, the theme shows those links itself.
+6. Optional: Appearance → Menus, create a menu, add Home, Story, Archive, About and Contact, and assign it to **Bottom navigation**. Until you do, the theme shows those links itself.
 
 ## How the pages work
 
@@ -24,6 +24,7 @@ Classic PHP theme with WooCommerce templates. The theme itself is in `bushido-us
 |---|---|
 | Home | The shop: in-stock products, in the order set under Products → Sorting |
 | Product | Opens as a dialog over Home: gallery with small thumbnails, `<` `>` arrows, sizes as text (several at once), Add to bag. A product's URL opens Home with its dialog showing |
+| Story (slug `story`) | Larger logo, the two side figures together as one fixed backdrop, and the text in white panels scrolling over them. One panel per heading (Heading 2) in the page editor; an empty page shows the text from bushidonepal.com/about-us |
 | Archive (slug `archive`) | Sold-out products, greyed, labelled "Sold out" |
 | About, Contact, any page | Page title and content |
 | Cart, Checkout, My account | WooCommerce's pages, restyled to match |

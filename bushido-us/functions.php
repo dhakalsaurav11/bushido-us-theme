@@ -123,10 +123,10 @@ add_filter( 'woocommerce_add_to_cart_fragments', function ( $fragments ) {
 } );
 
 /* Used when no menu is assigned to the bottom navigation yet: Home, then any of the
-   Archive, About and Contact pages that exist. */
+   Story, Archive, About and Contact pages that exist. */
 function bushido_nav_fallback() {
 	$items = array( array( home_url( '/' ), __( 'Home', 'bushido-us' ), is_front_page() ) );
-	foreach ( array( 'archive', 'about', 'contact' ) as $slug ) {
+	foreach ( array( 'story', 'archive', 'about', 'contact' ) as $slug ) {
 		$page = get_page_by_path( $slug );
 		if ( $page ) {
 			$items[] = array( get_permalink( $page ), get_the_title( $page ), is_page( $page->ID ) );
@@ -142,6 +142,46 @@ function bushido_nav_fallback() {
 		);
 	}
 	echo '</ul>';
+}
+
+/* Story page (page-story.php): the side figures move into the centre column there. */
+function bushido_is_story() {
+	return is_page() && ( 'page-story.php' === get_page_template_slug() || is_page( 'story' ) );
+}
+
+add_filter( 'body_class', function ( $classes ) {
+	if ( bushido_is_story() ) {
+		$classes[] = 'bh-story-page';
+	}
+	return $classes;
+} );
+
+/* One panel per heading: content before the first <h2> is its own panel. */
+function bushido_story_sections( $html ) {
+	$parts = preg_split( '/(?=<h2[\s>])/i', (string) $html, -1, PREG_SPLIT_NO_EMPTY );
+	return array_values( array_filter( array_map( 'trim', $parts ), fn( $part ) => '' !== trim( wp_strip_all_tags( $part ) ) ) );
+}
+
+/* Shown while the Story page has no content of its own. Text from bushidonepal.com/about-us. */
+function bushido_story_default() {
+	ob_start();
+	?>
+	<h2>Built in Kathmandu. Worn your way.</h2>
+	<p>Streetwear shaped by Japanese folklore and the energy of the city we call home.</p>
+	<h2>A Kathmandu point of view.</h2>
+	<p>Our point of view is local and outward-looking. The streets around us, the people who wear Bushido and the visual worlds that keep pulling us back all shape the work.</p>
+	<p>We make clothing with a clear identity: expressive enough to be noticed, considered enough to become part of everyday life.</p>
+	<h2>Folklore, translated.</h2>
+	<p>Dragons, sakura, Ryujin and the idea of mushin run through our collections. We translate those references through silhouette, layering, colour and graphic placement rather than treating them as costume.</p>
+	<p>The result is clothing that carries a story without telling you how to wear it.</p>
+	<h2>Made for repeat wear.</h2>
+	<p>A garment still has a job to do. We focus on silhouettes that layer easily, graphics that reward a closer look and pieces that feel personal long after the first wear.</p>
+	<p>Each drop adds another chapter, while the people wearing it decide what that chapter becomes.</p>
+	<h2>The next chapter is worn.</h2>
+	<p>Explore the current collection and find the piece that becomes part of your own story.</p>
+	<p><a class="bh-story-cta" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Shop the current drop', 'bushido-us' ); ?></a></p>
+	<?php
+	return ob_get_clean();
 }
 
 /* Product grid used by Home, Archive and product categories. */

@@ -263,6 +263,58 @@ a { color: inherit; text-decoration: none; }
 .wc-block-grid__product-price { color: var(--bh-grey); }
 .wc-block-cart__empty-cart__title { font: 500 13px/1.4 var(--bh-mono); letter-spacing: .1em; text-transform: uppercase; }
 
+/* Story page: a taller logo bar, the two figures fixed together behind the centre column,
+   and the text scrolling over them in white hairline panels. */
+body.bh-story-page { --bh-top-h: 168px; }
+body.bh-story-page .bh-logo img { height: 128px; }
+.bh-story-figures {
+  position: fixed; z-index: 0;
+  top: calc(var(--bh-admin) + var(--bh-top-h) + env(safe-area-inset-top, 0px));
+  bottom: calc(var(--bh-nav-h) + env(safe-area-inset-bottom, 0px));
+  left: 50%; width: var(--bh-center); transform: translateX(-50%);
+  display: flex; justify-content: center; align-items: flex-end;
+  padding-top: 24px; overflow: hidden; pointer-events: none;
+}
+.bh-story-figure { flex: 1 1 50%; min-width: 0; width: 50%; height: 100%; max-width: none; object-fit: contain; }
+/* The two figures lean in and meet in the middle, reading as one picture. */
+.bh-story-figure--left { object-position: right bottom; margin-right: -4%; }
+.bh-story-figure--right { object-position: left bottom; margin-left: -4%; }
+.bh-story {
+  position: relative; z-index: 1;
+  display: grid; gap: 38vh; justify-items: center;
+  padding: 34vh 0 18vh;
+}
+.bh-story-panel {
+  width: min(100%, 520px);
+  background: var(--bh-white); border: 1px solid var(--bh-line);
+  padding: 28px 32px 30px;
+  font-size: 13px; line-height: 1.7;
+}
+.bh-story-panel h2 {
+  margin: 0 0 14px; font: 500 13px/1.4 var(--bh-mono);
+  letter-spacing: .1em; text-transform: uppercase; text-wrap: balance;
+}
+.bh-story-panel:first-child h2 { font-size: 16px; letter-spacing: .08em; }
+.bh-story-panel p { margin: 0; color: #444444; }
+.bh-story-panel p + p { margin-top: .9em; }
+.bh-story-panel a { text-decoration: underline; text-underline-offset: 3px; }
+.bh-story-panel .bh-story-cta {
+  display: inline-block; margin-top: 8px; padding: 14px 22px;
+  background: var(--bh-ink); color: var(--bh-white);
+  font-weight: 500; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+}
+.bh-story-panel .bh-story-cta:hover { background: #333333; }
+@media (max-width: 560px) {
+  body.bh-story-page { --bh-top-h: 112px; }
+  body.bh-story-page .bh-logo img { height: 84px; }
+  .bh-story { gap: 30vh; padding-top: 56vh; }
+  /* Phones: size the pair by height and let the outer edges crop, so the figures stay large. */
+  .bh-story-figure { flex: none; width: auto; height: 64%; }
+  .bh-story-figure--left { margin-right: -7%; }
+  .bh-story-figure--right { margin-left: -7%; }
+  .bh-story-panel { padding: 22px 20px 24px; font-size: 12px; }
+}
+
 /* Product dialog: opens over the grid with the page blurred behind it. */
 html:has(.bh-dialog[open]) { overflow: hidden; }
 .bh-dialog {
